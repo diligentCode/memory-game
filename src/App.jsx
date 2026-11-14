@@ -1,29 +1,46 @@
 import { useState, useEffect } from "react";
+import Header from "./Header.jsx";
+import Cards from "./Cards.jsx";
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [pokemonData, setPokemonData] = useState(null);
   useEffect(() => {
     async function getPokeObject() {
       const response = await fetch(
         "https://pokeapi.co/api/v2/pokemon?limit=12",
       );
       const data = await response.json();
-      const newData = await data.results.map(async (pokeItem) => {
-        let link = pokeItem.url;
-        let pokeItemData = await fetch(link);
-        let newPokeItemData = await pokeItemData.json();
-        return {
-          id: newPokeItemData.id,
-          name: newPokeItemData.name,
-          url: newPokeItemData.sprites.other["official-artwork"].front_shiny,
-        };
-      });
-      return newData;
-    }
-    console.log(getPokeObject());
-  }, []);
+      const newData = await Promise.all(
+        data.results.map(async (pokeItem) => {
+          const response = await fetch(pokeItem.url);
+          const details = await response.json();
 
-  return <> </>;
+          return {
+            id: details.id,
+            name: details.name,
+            image: details.sprites.other["official-artwork"].front_shiny,
+            isClicked: false,
+          };
+        }),
+      );
+      await setPokemonData(newData);
+      console.log(newData);
+    }
+    getPokeObject();
+  }, []);
+  if (pokemonData === null) {
+    return (
+      <>
+        <p>Loading...</p>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Header pokemonData={pokemonData}></Header>
+        <Cards pokemonData={pokemonData}></Cards>
+      </>
+    );
+  }
 }
 
 export default App;
