@@ -27,6 +27,33 @@ function App() {
     }
     getPokeObject();
   }, []);
+
+  function handleClick(e) {
+    let wrongMove = false;
+    const updateData = pokemonData.map((item) => {
+      if (item.id == e.target.id) {
+        if (item.isClicked == true) {
+          wrongMove = true;
+        }
+        return { ...item, isClicked: true };
+      } else {
+        return item;
+      }
+    });
+    if (!wrongMove) {
+      setPokemonData(updateData);
+    } else {
+      resetGame();
+    }
+  }
+
+  function resetGame() {
+    const updateData = pokemonData.map((item) => {
+      return { ...item, isClicked: false };
+    });
+    setPokemonData(updateData);
+  }
+
   if (pokemonData === null) {
     return (
       <>
@@ -37,7 +64,7 @@ function App() {
     return (
       <>
         <Header pokemonData={pokemonData}></Header>
-        <Cards pokemonData={pokemonData}></Cards>
+        <Cards pokemonData={pokemonData} handleClick={handleClick}></Cards>
       </>
     );
   }

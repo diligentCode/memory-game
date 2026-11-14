@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Header({ pokemonData }) {
-  let BesScore = 0;
-
+  const [bestScore, setBestScore] = useState(0);
   let score = pokemonData.filter((item) => {
-    console.log(item.isClicked);
-    return !item.isClicked;
+    return item.isClicked;
   }).length;
+
+  if (score > bestScore) {
+    setBestScore(score);
+  }
   return (
     <>
       <h1>Memory Game</h1>
       <div>
         <p>Score : {score}</p>
-        <p>Best Score : {BesScore}</p>
+        <p>Best Score : {bestScore}</p>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Cards({ pokemonData }) {
+export default function Cards({ pokemonData, handleClick }) {
   return (
     <>
       <div>
@@ -12,6 +12,7 @@ export default function Cards({ pokemonData }) {
               src={item.image}
               alt=""
               width={200}
+              onClick={handleClick}
             />
           );
         })}
