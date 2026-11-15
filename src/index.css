@@ -1,0 +1,148 @@
+/* index.css */
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    "Fredoka",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  min-height: 100vh;
+  color: #ffffff;
+  /* Vibrant teal base with subtle grid lines inspired by the reference image */
+  background-color: #0cb4a6;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(7, 153, 140, 0.6) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 15% 80%,
+      rgba(7, 153, 140, 0.6) 0%,
+      transparent 45%
+    );
+  background-size:
+    48px 48px,
+    48px 48px,
+    100% 100%,
+    100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+#root {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+/* Styles the "Loading..." text in App.jsx */
+#root > p {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: #083d56;
+  padding: 1rem 2.5rem;
+  border-radius: 20px;
+  border: 5px solid #fdf8f5;
+  box-shadow: 0 8px 0 rgba(8, 61, 86, 0.35);
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Cards.css */
+
+/* Targets the <div> wrapping the 12 <img> cards in Cards.jsx */
+#root > div:last-of-type {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 820px;
+  padding: 0.5rem;
+}
+
+/* Targets each Pokémon <img> in Cards.jsx */
+#root > div:last-of-type img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  padding: 0.9rem;
+
+  /* Deep navy background & thick white rounded border from reference image */
+  background: radial-gradient(circle at 50% 45%, #0d5273 0%, #083d56 80%);
+  border: 6px solid #fdf8f5;
+  border-radius: 22px;
+
+  /* Playful tactile card shadow */
+  box-shadow:
+    0 8px 0 rgba(8, 61, 86, 0.35),
+    inset 0 4px 10px rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+/* Hover lift & warm highlight */
+#root > div:last-of-type img:hover {
+  transform: translateY(-7px) rotate(-1.5deg) scale(1.03);
+  border-color: #ffd166;
+  box-shadow:
+    0 14px 0 rgba(8, 61, 86, 0.35),
+    0 0 20px rgba(255, 209, 102, 0.45);
+}
+
+/* Tactile press effect when clicking a card */
+#root > div:last-of-type img:active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow: 0 3px 0 rgba(8, 61, 86, 0.4);
+}
+
+/* Responsive breakpoints for tablets & mobile phones */
+@media (max-width: 768px) {
+  #root > div:last-of-type {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #root > div:last-of-type {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+
+  #root > div:last-of-type img {
+    border-width: 5px;
+    border-radius: 18px;
+    padding: 0.65rem;
+  }
+}

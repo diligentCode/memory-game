@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "./Header.css";
 export default function Header({ pokemonData }) {
   const [bestScore, setBestScore] = useState(0);
   let score = pokemonData.filter((item) => {

@@ -1,0 +1,54 @@
+/* Header.css */
+
+/* Targets the <h1>Memory Game</h1> in Header.jsx */
+#root > h1 {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 0 #078c81;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Decorative dots flanking the title like in the reference image */
+#root > h1::before,
+#root > h1::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 3px 0 #078c81;
+}
+
+/* Targets the <div> wrapping Score and Best Score in Header.jsx */
+#root > div:first-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* Score & Best Score pills */
+#root > div:first-of-type p {
+  background-color: #083d56;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border-radius: 16px;
+  border: 4px solid #fdf8f5;
+  box-shadow: 0 5px 0 rgba(8, 61, 86, 0.35);
+  transition: transform 0.2s ease;
+}
+
+/* Subtle accent highlight on Best Score */
+#root > div:first-of-type p:last-child {
+  background-color: #ff9f1c;
+  color: #083d56;
+}

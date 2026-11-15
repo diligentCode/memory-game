@@ -27,21 +27,31 @@ function App() {
     // }
 
     async function getPokeObject() {
-      const newData = [];
-
-      for (let i = 0; i < 12; i++) {
-        let ID = Math.floor(Math.random() * 500 + 1);
-        let tempdata = await fetch(`https://pokeapi.co/api/v2/pokemon/${ID}`);
-        let data = await tempdata.json();
-        await newData.push({
-          id: data.id,
-          name: data.name,
-          image: data.sprites.other["official-artwork"].front_shiny,
-          isClicked: false,
-        });
+      const uniqueIds = new Set();
+      while (uniqueIds.size < 12) {
+        const randomId = Math.floor(Math.random() * 500) + 1;
+        uniqueIds.add(randomId);
       }
+
+      const newData = await Promise.all(
+        [...uniqueIds].map(async (id) => {
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${id}`,
+          );
+          const data = await response.json();
+
+          return {
+            id: data.id,
+            name: data.name,
+            image: data.sprites.other["official-artwork"].front_shiny,
+            isClicked: false,
+          };
+        }),
+      );
+
       setPokemonData(newData);
     }
+
     getPokeObject();
   }, []);
 
