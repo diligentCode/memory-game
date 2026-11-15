@@ -7,7 +7,7 @@ export default function Cards({ pokemonData, handleClick }) {
         {pokemonData.map((item, index) => {
           return (
             <img
-              id={index + 1}
+              id={item.id}
               key={index}
               src={item.image}
               alt=""

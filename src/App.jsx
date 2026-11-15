@@ -4,26 +4,43 @@ import Cards from "./Cards.jsx";
 function App() {
   const [pokemonData, setPokemonData] = useState(null);
   useEffect(() => {
-    async function getPokeObject() {
-      const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=12",
-      );
-      const data = await response.json();
-      const newData = await Promise.all(
-        data.results.map(async (pokeItem) => {
-          const response = await fetch(pokeItem.url);
-          const details = await response.json();
+    // async function getPokeObject() {
+    //   const response = await fetch(
+    //     "https://pokeapi.co/api/v2/pokemon?limit=12",
+    //   );
+    //   const data = await response.json();
+    //   const newData = await Promise.all(
+    //     data.results.map(async (pokeItem) => {
+    //       const response = await fetch(pokeItem.url);
+    //       const details = await response.json();
 
-          return {
-            id: details.id,
-            name: details.name,
-            image: details.sprites.other["official-artwork"].front_shiny,
-            isClicked: false,
-          };
-        }),
-      );
-      await setPokemonData(newData);
-      console.log(newData);
+    //       return {
+    //         id: details.id,
+    //         name: details.name,
+    //         image: details.sprites.other["official-artwork"].front_shiny,
+    //         isClicked: false,
+    //       };
+    //     }),
+    //   );
+    //   await setPokemonData(newData);
+    //   console.log(newData);
+    // }
+
+    async function getPokeObject() {
+      const newData = [];
+
+      for (let i = 0; i < 12; i++) {
+        let ID = Math.floor(Math.random() * 500 + 1);
+        let tempdata = await fetch(`https://pokeapi.co/api/v2/pokemon/${ID}`);
+        let data = await tempdata.json();
+        await newData.push({
+          id: data.id,
+          name: data.name,
+          image: data.sprites.other["official-artwork"].front_shiny,
+          isClicked: false,
+        });
+      }
+      setPokemonData(newData);
     }
     getPokeObject();
   }, []);
@@ -41,7 +58,12 @@ function App() {
       }
     });
     if (!wrongMove) {
-      setPokemonData(updateData);
+      const shuffled = [...updateData];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      setPokemonData(shuffled);
     } else {
       resetGame();
     }
